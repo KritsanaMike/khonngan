@@ -1,11 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, MapPin, Phone, Star, MessageSquare, CheckCircle } from 'lucide-react';
+import { User, MapPin, Phone, Star, MessageSquare, CheckCircle, ThumbsUp } from 'lucide-react';
 import { PageHeader } from '../../../components/PageHeader';
 import { Button } from '../../../components/Button';
+import { StarRating } from '../../../components/StarRating';
 
 export const WorkerProfile: React.FC = () => {
   const navigate = useNavigate();
+
+  // Mock Reviews Data
+  const reviews = [
+    { id: 1, contractor: 'บจก. เอสพี คอนสตรัคชั่น', stars: 5, comment: 'งานเรียบร้อยมาก ตรงเวลาครับ', date: '10 ต.ค. 66', job: 'งานฉาบปูน' },
+    { id: 2, contractor: 'ช่างใหญ่ รับเหมา', stars: 4, comment: 'ฝีมือดี แต่มาช้านิดหน่อย', date: '25 ก.ย. 66', job: 'ปูกระเบื้อง' },
+  ];
 
   return (
     <div className="min-h-screen bg-bg-soft pb-24">
@@ -24,10 +31,11 @@ export const WorkerProfile: React.FC = () => {
                 <h2 className="text-xl font-bold text-primary">สมชาย ใจดี</h2>
                 <p className="text-gray-500 text-sm">ช่างปูน • ช่างกระเบื้อง</p>
                 
-                <div className="flex justify-center items-center mt-2 space-x-1 text-secondary">
-                    <Star size={16} fill="currentColor" />
-                    <span className="font-bold text-lg">4.5</span>
-                    <span className="text-gray-400 text-xs">(24 รีวิว)</span>
+                {/* Rating Summary */}
+                <div className="flex justify-center items-center mt-3 p-2 bg-orange-50 rounded-xl inline-flex mx-auto">
+                    <StarRating rating={4.5} size={18} readonly />
+                    <span className="font-bold text-lg text-secondary ml-2">4.5</span>
+                    <span className="text-gray-400 text-xs ml-1">(12 รีวิว)</span>
                 </div>
            </div>
         </div>
@@ -35,7 +43,7 @@ export const WorkerProfile: React.FC = () => {
         {/* Details */}
         <div className="space-y-4 mb-8">
              <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center">
-                 <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mr-4">
+                 <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mr-4 shrink-0">
                     <Phone size={20} />
                  </div>
                  <div>
@@ -45,7 +53,7 @@ export const WorkerProfile: React.FC = () => {
              </div>
 
              <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center">
-                 <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 mr-4">
+                 <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 mr-4 shrink-0">
                     <MapPin size={20} />
                  </div>
                  <div>
@@ -70,6 +78,29 @@ export const WorkerProfile: React.FC = () => {
                         </span>
                     ))}
                  </div>
+             </div>
+
+             {/* Recent Reviews */}
+             <div className="bg-white p-6 rounded-2xl shadow-sm">
+                <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-bold text-primary">รีวิวจากผู้รับเหมา</h3>
+                    <span className="text-xs text-secondary font-medium">ดูทั้งหมด</span>
+                </div>
+                <div className="space-y-4 divide-y divide-gray-50">
+                    {reviews.map(review => (
+                        <div key={review.id} className="pt-3 first:pt-0">
+                            <div className="flex justify-between items-start mb-1">
+                                <p className="text-sm font-bold text-gray-800">{review.contractor}</p>
+                                <span className="text-[10px] text-gray-400">{review.date}</span>
+                            </div>
+                            <div className="mb-1">
+                                <StarRating rating={review.stars} size={12} readonly />
+                            </div>
+                            <p className="text-xs text-gray-600 italic">"{review.comment}"</p>
+                            <p className="text-[10px] text-gray-400 mt-1">งาน: {review.job}</p>
+                        </div>
+                    ))}
+                </div>
              </div>
         </div>
 

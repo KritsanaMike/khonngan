@@ -1,9 +1,11 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Calendar, DollarSign, Users, Edit2, User, MessageSquare } from 'lucide-react';
+import { MapPin, Calendar, DollarSign, Users, Edit2, User, MessageSquare, Star } from 'lucide-react';
 import { PageHeader } from '../../../components/PageHeader';
 import { StatusBadge } from '../../../components/StatusBadge';
 import { Button } from '../../../components/Button';
+import { StarRating } from '../../../components/StarRating';
+import { Applicant } from '../../../types';
 
 // Mock Data
 const JOB_DATA = {
@@ -20,10 +22,10 @@ const JOB_DATA = {
   postedDate: '2 วันที่แล้ว'
 };
 
-const APPLICANTS = [
-  { id: '101', name: 'สมชาย ใจดี', skills: ['ช่างปูน', 'ช่างกระเบื้อง'], experience: '5 ปี', status: 'PENDING', rating: 4.5 },
-  { id: '102', name: 'วิชัย การช่าง', skills: ['ช่างปูน', 'ช่างไม้'], experience: '8 ปี', status: 'APPROVED', rating: 4.8 },
-  { id: '103', name: 'เอกพล คนขยัน', skills: ['กรรมกร'], experience: '2 ปี', status: 'REJECTED', rating: 4.0 },
+const APPLICANTS: Applicant[] = [
+  { id: '101', name: 'สมชาย ใจดี', phoneNumber: '081', skills: ['ช่างปูน', 'ช่างกระเบื้อง'], experience: '5 ปี', status: 'PENDING', jobId: '1', jobTitle: 'Job1', rating: 4.5, reviewCount: 12 },
+  { id: '102', name: 'วิชัย การช่าง', phoneNumber: '082', skills: ['ช่างปูน', 'ช่างไม้'], experience: '8 ปี', status: 'APPROVED', jobId: '1', jobTitle: 'Job1', rating: 4.8, reviewCount: 30 },
+  { id: '103', name: 'เอกพล คนขยัน', phoneNumber: '083', skills: ['กรรมกร'], experience: '2 ปี', status: 'REJECTED', jobId: '1', jobTitle: 'Job1', rating: 0, reviewCount: 0 }, // Unrated
 ];
 
 export const JobDetail: React.FC = () => {
@@ -95,14 +97,21 @@ export const JobDetail: React.FC = () => {
                     <div key={app.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between mb-3">
                             <div className="flex items-center">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 mr-3">
+                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 mr-3 shrink-0">
                                     <User size={24} />
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-primary">{app.name}</h4>
-                                    <div className="flex items-center text-xs text-gray-500 mt-1">
-                                        <span className="mr-2 text-orange-500">★ {app.rating}</span>
-                                        <span>Exp. {app.experience}</span>
+                                    <div className="flex items-center text-xs mt-1">
+                                        {app.rating && app.rating > 0 ? (
+                                            <div className="flex items-center text-secondary font-medium mr-2">
+                                               <Star size={10} fill="currentColor" className="mr-0.5" />
+                                               {app.rating}
+                                            </div>
+                                        ) : (
+                                            <span className="text-gray-400 mr-2">ยังไม่มีคะแนน</span>
+                                        )}
+                                        <span className="text-gray-500">Exp. {app.experience}</span>
                                     </div>
                                 </div>
                             </div>

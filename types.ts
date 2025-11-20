@@ -29,6 +29,12 @@ export interface JobPost {
   postedDate: string;
 }
 
+export interface WorkerRating {
+  stars: number;
+  comment?: string;
+  createdAt?: string;
+}
+
 export interface Applicant {
   id: string;
   name: string;
@@ -40,15 +46,18 @@ export interface Applicant {
   jobTitle: string;
   avatarUrl?: string;
   rating?: number;
+  reviewCount?: number;
 }
 
 export interface Payment {
   id: string;
   jobTitle: string;
   workerName: string;
+  workerId?: string;
   amount: string;
   status: 'PENDING' | 'COMPLETED' | 'FAILED';
   date: string;
+  rating?: WorkerRating;
 }
 
 export interface ChatPreview {

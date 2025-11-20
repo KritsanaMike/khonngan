@@ -17,6 +17,7 @@ import { WorkerProfile } from './pages/contractor/applicants/WorkerProfile';
 import { ChatList } from './pages/contractor/chat/ChatList';
 import { ChatDetail } from './pages/contractor/chat/ChatDetail';
 import { PaymentList } from './pages/contractor/payments/PaymentList';
+import { PaymentDetail } from './pages/contractor/payments/PaymentDetail';
 import { ContractorProfile } from './pages/contractor/profile/Profile';
 import { ContractorEditProfile } from './pages/contractor/profile/EditProfile';
 import { ContractorEditProfileSuccess } from './pages/contractor/profile/EditProfileSuccess';
@@ -98,6 +99,7 @@ const App: React.FC = () => {
           
           {/* Payments */}
           <Route path="/contractor/payments" element={<PaymentList />} />
+          <Route path="/contractor/payments/:id" element={<PaymentDetail />} />
           
           {/* Profile */}
           <Route path="/contractor/profile" element={<ContractorProfile />} />
